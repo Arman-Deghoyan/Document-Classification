@@ -1,12 +1,14 @@
 import base64
 import requests
+import sys
 
-
-with open("img.jpeg", "rb") as fp:
+with open(sys.argv[1], "rb") as fp:
     img = fp.read()
     img = base64.encodebytes(img).decode()
 
-request = {"img": img}
+# request = {"img": img, "model": "VGG"}
 
-res = requests.post("http://localhost:8001/predict", json=request)
-print(res.json())
+request = {"img": img, "model": "VGGFasttext"}
+
+res = requests.post("http://localhost:5000/predict", json=request)
+print(res.json()['result'])
