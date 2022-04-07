@@ -10,5 +10,5 @@ with open(sys.argv[1], "rb") as fp:
 
 request = {"img": img, "model": "Fasttext"}
 
-res = requests.post("http://localhost:5000/predict", json=request)
-print(res.json()['result'])
+with open("request.json", "w") as file:
+    json.dump(request, file) 

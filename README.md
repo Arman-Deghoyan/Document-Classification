@@ -26,6 +26,13 @@ sudo docker run --rm -p 5000:5000 -v Weights:/app/Weights --name doc_classificat
 ```
 
 ## Running apache benchmarking on the server
+Create a sample request.json file:
+```
+cd client
+python create_json_request.py sample_image.jpg
+```
+
+Run apache benchmark
 ```
 ab -k -t 60 -c 2 -T 'application/json' -p request.json  http://0.0.0.0:5000/predict
 ```
@@ -37,7 +44,7 @@ gunicorn app:app --bind 0.0.0.0:5000 --workers 1
 
 ## Sending an image for inference from client
 ```
-python client.py ImagePath.png
+python client.py sample_image.jpg
 ```
 
 ## The Team

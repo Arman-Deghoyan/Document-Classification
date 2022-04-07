@@ -3,20 +3,9 @@ from predictor import VGG_Predictor, FastTextVGGPredictor, FasttextPredictor
 
 app = Flask(__name__)
 
-VGG_MODEL = VGG_Predictor(
-            "/app/Weights/VGG_Weights/vgg_weights_11.pth",
-            "/app/Weights/VGG_Weights/VGG_Labels.json")
-
-
-VGGFasttext_MODEL = FastTextVGGPredictor(
-            "/app/Weights/VGGFasttext_Weights/Fasttext_VGG_17.pth",
-            "/app/Weights/VGGFasttext_Weights/FastTextModelWeights.bin",
-            "/app/Weights/VGGFasttext_Weights/VGG_Fasttext_Labels.json")
-
-Fasttext_MODEL = FasttextPredictor(
-            "/app/Weights/VGGFasttext_Weights/FastTextModelWeights.bin",
-            "/app/Weights/VGGFasttext_Weights/VGG_Fasttext_Labels.json")
-
+app.VGG_MODEL = None 
+app.VGGFasttext_MODEL = None
+app.Fasttext_MODEL = None 
 
 @app.route("/predict", methods=["POST"])
 def predict_func():
@@ -25,14 +14,29 @@ def predict_func():
     selected_model = request.json["model"]
 
     if selected_model == "VGG":
-        result = VGG_MODEL(payload_img)
+        if app.VGG_MODEL is None:
+            app.VGG_MODEL = VGG_Predictor(
+                "/app/Weights/VGG_Weights/vgg_weights_11.pth",
+                "/app/Weights/VGG_Weights/VGG_Labels.json")
+
+        result = app.VGG_MODEL(payload_img)
 
     elif selected_model == "VGGFasttext":
-        result = VGGFasttext_MODEL(payload_img)
+        if app.VGGFasttext_MODEL is None:
+            app.VGGFasttext_MODEL = FastTextVGGPredictor(
+                "/app/Weights/VGGFasttext_Weights/Fasttext_VGG_17.pth",
+                "/app/Weights/VGGFasttext_Weights/FastTextModelWeights.bin",
+                "/app/Weights/VGGFasttext_Weights/VGG_Fasttext_Labels.json")
+
+        result = app.VGGFasttext_MODEL(payload_img)
 
     elif selected_model == "Fasttext":
-        result = Fasttext_MODEL(payload_img)
+        if app.Fasttext_MODEL is None:
+            app.Fasttext_MODEL = FasttextPredictor(
+                "/app/Weights/VGGFasttext_Weights/FastTextModelWeights.bin",
+                "/app/Weights/VGGFasttext_Weights/VGG_Fasttext_Labels.json")
 
+        result = app.Fasttext_MODEL(payload_img)
     else:
         raise Exception("Unknown model.")
 
