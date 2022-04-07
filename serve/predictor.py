@@ -114,6 +114,7 @@ class FastTextVGGPredictor:
 
         return self.labels[str(result.item())]
 
+
 class FasttextPredictor:
     def __init__(self, fasttext_model_file: str, labels_f: str):
         with open(labels_f, "r") as fp:
@@ -135,12 +136,14 @@ class FasttextPredictor:
         return words
 
     def preprocess_raw_text(self, curr_text):
+
         text = normalize(curr_text)
         text = remove_punctuation(text)
         text = textLower(text)
         text = snowball.stem(text)
         text = remove_stopwords_spacy(text)
         text = remove_non_eng_words(text)
+
         return text
 
     def _pre_process(self, img):
@@ -149,7 +152,7 @@ class FasttextPredictor:
             pil_image = fp.convert("RGB")
 
         # build fasttext_features.
-        processed_text=self.preprocess_raw_text(self.image_to_text(pil_image))
+        processed_text = self.preprocess_raw_text(self.image_to_text(pil_image))
 
         return processed_text
 
@@ -157,6 +160,7 @@ class FasttextPredictor:
         processed_text = self._pre_process(inp)
         result = self.ft_model.predict(processed_text)
         return self.labels[result[0][0].split('_')[-1]]
+
 
 if __name__ == "__main__":
 
