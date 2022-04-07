@@ -11,7 +11,7 @@ The following models were developed:
 |VGG with changed classifier|         87.8%       |     ~138 million params    |      12     |
 |      VGG16 + Fasttext     |         92.27%      |     ~138 million params    |      21     |
 |         Layout_MV2        |         80%         |     ~200 million params    |     1/3     |
-|      OCR with NLP - Countvectorizer with bigrams + logistic regression |  0.796 | - | - |
+|      OCR with NLP - Countvectorizer with bigrams + logistic regression |  0.796% | - | - |
 | OCR with NLP -Fasttext with charngrams 5,7 | 0.735% |               -         |      7      | 
 
 ## Building and running the docker image
@@ -42,7 +42,7 @@ python client.py ImagePath.png
 
 ## The Team
 
-Hovsep Avagyan - hovsep.avagyan.2016@gmail.com
-Arman Deghoyan - armani.deghoyan@gmail.com
-Martun Karapetyan - martun.karapetyan@gmail.com
+Hovsep Avagyan - hovsep.avagyan.2016@gmail.com  
+Arman Deghoyan - armani.deghoyan@gmail.com  
+Martun Karapetyan - martun.karapetyan@gmail.com  
 
